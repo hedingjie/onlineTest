@@ -18,8 +18,24 @@
             <td>
                 <ul>
                     <li><input type="radio" name="type" value="0">单选题</li>
-                    <li><input type="radio" name="type" value="0">多选题</li>
-                    <li><input type="radio" name="type" value="0">判断题</li>
+                    <li><input type="radio" name="type" value="1">多选题</li>
+                    <li><input type="radio" name="type" value="2">判断题</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>考试内容：</td>
+            <td>
+                <ul>
+                    <li><input type="radio" name="content" value="0">内务条令条例</li>
+                    <li><input type="radio" name="content" value="1">纪律条令条例</li>
+                    <li><input type="radio" name="content" value="2">队列条令条例</li>
+                    <li><input type="radio" name="content" value="3">军队基层建设纲要</li>
+                    <li><input type="radio" name="content" value="4">军兵种知识</li>
+                    <li><input type="radio" name="content" value="5">军事高技术知识</li>
+                    <li><input type="radio" name="content" value="6">军事理论导论</li>
+                    <li><input type="radio" name="content" value="7">作战基础知识</li>
+                    <li><input type="radio" name="content" value="8">训练基础理论</li>
                 </ul>
             </td>
         </tr>
