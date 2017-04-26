@@ -17,6 +17,8 @@ import com.iweb.entity.Question;
 
 public class QuestionDAO extends BaseDAO implements IQuestionDAO {
 
+
+//	从数据库中读取单选题
 	@Override
 	public List<Question> single() throws Exception {
 		List<Question> questions = new ArrayList<Question>();
@@ -30,7 +32,7 @@ public class QuestionDAO extends BaseDAO implements IQuestionDAO {
 			while(rs.next()){
 				questions.add(new Question(rs.getInt("id"),
 						rs.getString("question"),
-						new String[]{rs.getString("A"),rs.getString("B"),rs.getString("C"),rs.getString("D")},
+						new String[]{rs.getString("A"),rs.getString("B"),rs.getString("C"),rs.getString("D"),rs.getString("E"),rs.getString("F")},
 						rs.getString("answer")
 						) );
 			}
@@ -42,6 +44,7 @@ public class QuestionDAO extends BaseDAO implements IQuestionDAO {
 		return questions;
 	}
 
+	//从数据库中读取判断题
 	@Override
 	public List<Question> judgement() throws Exception {
 		List<Question> questions = new ArrayList<Question>();
@@ -57,6 +60,32 @@ public class QuestionDAO extends BaseDAO implements IQuestionDAO {
 						rs.getString("question"),
 						rs.getString("answer")
 						) );
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(rs,pstmt,conn);
+		}
+		return questions;
+	}
+
+	//从数据库中读取多选题
+	@Override
+	public List<Question> multi() throws Exception {
+		List<Question> questions = new ArrayList<Question>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
+		try{
+			conn = getConn();
+			pstmt = conn.prepareStatement("select * from QUESTION_MULTI order by rand()");
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				questions.add(new Question(rs.getInt("id"),
+						rs.getString("question"),
+						new String[]{rs.getString("A"),rs.getString("B"),rs.getString("C"),rs.getString("D"),rs.getString("E"),rs.getString("F")},
+						rs.getString("answer")
+				) );
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -91,7 +120,7 @@ public class QuestionDAO extends BaseDAO implements IQuestionDAO {
 		PreparedStatement pstmt = null;
 		try{
 			conn = getConn();
-			pstmt = conn.prepareStatement("insert into QUESTION_SINGLE(question,A,B,C,D,answer)values(?,?,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into QUESTION_SINGLE(question,A,B,C,D,E,F,answer)values(?,?,?,?,?,?,?,?)");
 
 			pstmt.setString(1, single.getQuestion());
 			pstmt.setString(2, single.getCheck()[0]);

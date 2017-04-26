@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 public class Question {
 	private int id;
 	private String question;
-	private String[] check = new String[4];
+	private String[] check = new String[6];
 	private String answer;
 	
 	public Question(){

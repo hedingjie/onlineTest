@@ -47,9 +47,10 @@ public class TestServlet implements Servlet{
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String question = request.getParameter("question");
-		String answer = request.getParameter("answer");
-		
+		String type = request.getParameter("type");
+//		System.out.println(question);
+		String num = request.getParameter("num");
+		System.out.println(num);
 		QuestionDAO questionDAO = new QuestionDAO();
 		List<Question> questions = null;
 		try {
@@ -58,6 +59,7 @@ public class TestServlet implements Servlet{
 			e.printStackTrace();
 		}
 		((HttpServletRequest)request).getSession().setAttribute("questions", questions);
+		((HttpServletRequest)request).getSession().setAttribute("type", type);
 		List<Question> q = (List<Question>)((HttpServletRequest)request).getSession().getAttribute("questions");
 		System.out.println("test:" + q.size());
 		PrintWriter out = response.getWriter();
@@ -69,17 +71,25 @@ public class TestServlet implements Servlet{
 		out.println("	<h1 align='center'>欢迎进入考试系统！</h1>");
 		out.println("<form action=\"score.action\" method=\"post\">");
 		out.println("	<ol id='question'>");
-		int flag = 0;
+		int flag = Integer.valueOf(num);
+		int order=1;
 		for(Question single : questions){
 			out.println("<li>");
 			out.println(single.getQuestion() + "<br/>");
 			out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"A\">" + single.getCheck()[0] + "<br/>");
 			out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"B\">" + single.getCheck()[1] + "<br/>");
 			out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"C\">" + single.getCheck()[2] + "<br/>");
-			out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"D\">" + single.getCheck()[3] + "<br/>");	
+			out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"D\">" + single.getCheck()[3] + "<br/>");
+			if(!single.getCheck()[4].equals("")){
+				out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"E\">" + single.getCheck()[4] + "<br/>");
+			}
+			if(!single.getCheck()[5].equals("")){
+				out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"F\">" + single.getCheck()[5] + "<br/>");
+			}
 			out.println("</li>");
-			flag++;
-			if(flag == 10){
+			order++;
+			flag--;
+			if(flag == 0 ){
 				break;
 			}
 		}

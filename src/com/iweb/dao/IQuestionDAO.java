@@ -14,7 +14,10 @@ public interface IQuestionDAO {
 	 * get judgements
 	 */
 	public List<Question> judgement() throws Exception;
-	
+	/**
+	 * get multiplequestions
+	 */
+	public List<Question> multi() throws Exception;
 	/**
 	 * add single questions
 	 */
