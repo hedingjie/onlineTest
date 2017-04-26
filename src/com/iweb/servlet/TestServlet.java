@@ -50,7 +50,7 @@ public class TestServlet implements Servlet{
 		String type = request.getParameter("type");
 //		System.out.println(question);
 		String num = request.getParameter("num");
-		System.out.println(num);
+//		System.out.println(num);
 		QuestionDAO questionDAO = new QuestionDAO();
 		List<Question> questions = null;
 		try {
@@ -103,6 +103,7 @@ public class TestServlet implements Servlet{
 		out.close();
 	}
 		// TODO Auto-generated method stub
+
 		
 	}
 
