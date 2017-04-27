@@ -60,49 +60,53 @@ public class TestServlet implements Servlet{
 		QuestionDAO questionDAO = new QuestionDAO();
 		if(type.equals("0")){
 			//单选题
-			List<Question> questions = null;
+			List<Question> questionsAll = null;
 			try {
 				if(content.equals("0")){
 					//内务
-					questions=questionDAO.neiwuSingle();
+					questionsAll=questionDAO.neiwuSingle();
 				}
 				else if(content.equals("1")){
 					//纪律
-					questions=questionDAO.jilvSingle();
+					questionsAll=questionDAO.jilvSingle();
 				}
 				else if(content.equals("2")){
 					//队列
-					questions=questionDAO.duilieSingle();
+					questionsAll=questionDAO.duilieSingle();
 				}
 				else if(content.equals("3")){
 					//基层建设
-					questions=questionDAO.jiansheSingle();
+					questionsAll=questionDAO.jiansheSingle();
 				}
 				else if(content.equals("4")){
 					//军兵种
-					questions=questionDAO.junzhongSingle();
+					questionsAll=questionDAO.junzhongSingle();
 				}
 				else if(content.equals("5")){
 					//军事高技术
-					questions=questionDAO.jishuSingle();
+					questionsAll=questionDAO.jishuSingle();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("6")){
 					//军事理论
-					questions=questionDAO.lilunSingle();
+					questionsAll=questionDAO.lilunSingle();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("7")){
 					//作战
-					questions=questionDAO.zuozhanSingle();
+					questionsAll=questionDAO.zuozhanSingle();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("8")){
 					//训练
-					questions=questionDAO.xunlianSingle();
+					questionsAll=questionDAO.xunlianSingle();
 				}
 				else{
-					questions = questionDAO.single();
+					questionsAll = questionDAO.single();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+			List<Question> questions=new ArrayList<Question>();
+			for(int i=0;i<Integer.valueOf(num);i++){
+				questions.add(questionsAll.get(i));
 			}
 			((HttpServletRequest)request).getSession().setAttribute("questions", questions);
 			((HttpServletRequest)request).getSession().setAttribute("content", content);
@@ -117,17 +121,15 @@ public class TestServlet implements Servlet{
 			out.println("	<h1 align='center'>欢迎进入考试系统！</h1>");
 			out.println("<form action=\"score.action\" method=\"post\">");
 			out.println("	<ol id='question'>");
-			int flag = Integer.valueOf(num);
-			int order=1;
-			JSONObject json=new JSONObject();
-			List<Map>  list=new ArrayList<Map>();
 			for(Question single : questions){
 				out.println("<li>");
 				out.println(single.getQuestion() + "<br/>");
 				out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"A\">" + single.getCheck()[0] + "<br/>");
 				out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"B\">" + single.getCheck()[1] + "<br/>");
 				out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"C\">" + single.getCheck()[2] + "<br/>");
-				out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"D\">" + single.getCheck()[3] + "<br/>");
+				if(!single.getCheck()[3].equals("")){
+					out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"D\">" + single.getCheck()[3] + "<br/>");
+				}
 				if(!single.getCheck()[4].equals("")){
 					out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"E\">" + single.getCheck()[4] + "<br/>");
 				}
@@ -135,14 +137,9 @@ public class TestServlet implements Servlet{
 					out.println("<input type=\"radio\" name=\"" + single.getQid() + "\" value=\"F\">" + single.getCheck()[5] + "<br/>");
 				}
 				out.println("</li>");
-				order++;
-				flag--;
-				if(flag == 0 ){
-					break;
-				}
 			}
 			out.println("	</ol>");
-			out.println("	<a href=\"/testweb/score.action\"><input type=\"submit\" value=提交></a>");
+			out.println("	<input type=\"submit\" value='提交'>");
 			out.println("</form>");
 			out.println("	</body>");
 			out.println("</html>");
@@ -151,54 +148,57 @@ public class TestServlet implements Servlet{
 		}
 		else if(type.equals("1")){
 			//多选题
-			List<Question> questions = null;
+			List<Question> questionsAll = null;
 			try {
 				if(content.equals("0")){
 					//内务
-					questions=questionDAO.neiwuMulti();
+					questionsAll=questionDAO.neiwuMulti();
 				}
 				else if(content.equals("1")){
 					//纪律
-					questions=questionDAO.jilvMulti();
+					questionsAll=questionDAO.jilvMulti();
 				}
 				else if(content.equals("2")){
 					//队列
-					questions=questionDAO.duilieMulti();
+					questionsAll=questionDAO.duilieMulti();
 				}
 				else if(content.equals("3")){
 					//基层建设
-					questions=questionDAO.jiansheMulti();
+					questionsAll=questionDAO.jiansheMulti();
 				}
 				else if(content.equals("4")){
 					//军兵种
-					questions=questionDAO.junzhongMulti();
+					questionsAll=questionDAO.junzhongMulti();
 				}
 				else if(content.equals("5")){
 					//军事高技术
-					questions=questionDAO.jishuMulti();
+					questionsAll=questionDAO.jishuMulti();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("6")){
 					//军事理论
-					questions=questionDAO.lilunMulti();
+					questionsAll=questionDAO.lilunMulti();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("7")){
 					//作战
-					questions=questionDAO.zuozhanMulti();
+					questionsAll=questionDAO.zuozhanMulti();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("8")){
 					//训练
-					questions=questionDAO.xunlianMulti();
+					questionsAll=questionDAO.xunlianMulti();
 				}
 				else{
-					questions = questionDAO.single();
+					questionsAll = questionDAO.single();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			List<Question>questions=new ArrayList<Question>();
+			for(int i=0;i<Integer.valueOf(num);i++){
+				questions.add(questionsAll.get(i));
+			}
 			((HttpServletRequest)request).getSession().setAttribute("questions", questions);
 			((HttpServletRequest)request).getSession().setAttribute("content", content);
 			((HttpServletRequest)request).getSession().setAttribute("type", type);
-			List<Question> q = (List<Question>)((HttpServletRequest)request).getSession().getAttribute("questions");
 			PrintWriter out = response.getWriter();
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
@@ -208,17 +208,14 @@ public class TestServlet implements Servlet{
 			out.println("	<h1 align='center'>欢迎进入考试系统！</h1>");
 			out.println("<form action=\"score.action\" method=\"post\">");
 			out.println("	<ol id='question'>");
-			int flag = Integer.valueOf(num);
-			int order=1;
-			JSONObject json=new JSONObject();
-			List<Map>  list=new ArrayList<Map>();
+
 			for(Question multiple : questions){
 				out.println("<li>");
 				out.println(multiple.getQuestion() + "<br/>");
 				out.println( multiple.getCheck()[0] + "<br/>");
 				out.println( multiple.getCheck()[1] + "<br/>");
 				out.println( multiple.getCheck()[2] + "<br/>");
-				if(!multiple.getCheck()[4].equals("")){
+				if(!multiple.getCheck()[3].equals("")){
 					out.println( multiple.getCheck()[3] + "<br/>");
 				}
 				if(!multiple.getCheck()[4].equals("")){
@@ -229,14 +226,9 @@ public class TestServlet implements Servlet{
 				}
 				out.println("请按序输入答案："+"<input type='text' name='"+multiple.getQid()+"'value=''>");
 				out.println("</li>");
-				order++;
-				flag--;
-				if(flag == 0 ){
-					break;
-				}
 			}
 			out.println("	</ol>");
-			out.println("	<a href=\"/testweb/score.action\"><input type=\"submit\" value=提交></a>");
+			out.println("	<input type=\"submit\" value='提交'>");
 			out.println("</form>");
 			out.println("	</body>");
 			out.println("</html>");
@@ -245,43 +237,43 @@ public class TestServlet implements Servlet{
 		}
 		else if(type.equals("2")){
 			//判断题
-			List<Judgement> judgements = null;
+			List<Judgement> judgementsAll = null;
 			try {
 				if(content.equals("0")){
 					//内务
-					judgements=questionDAO.neiwuJudgement();
+					judgementsAll=questionDAO.neiwuJudgement();
 				}
 				else if(content.equals("1")){
 					//纪律
-					judgements=questionDAO.jilvJudgement();
+					judgementsAll=questionDAO.jilvJudgement();
 				}
 				else if(content.equals("2")){
 					//队列
-					judgements=questionDAO.duilieJudgement();
+					judgementsAll=questionDAO.duilieJudgement();
 				}
 				else if(content.equals("3")){
 					//基层建设
-					judgements=questionDAO.jiansheJudgement();
+					judgementsAll=questionDAO.jiansheJudgement();
 				}
 				else if(content.equals("4")){
 					//军兵种
-					judgements=questionDAO.junzhongJudgement();
+					judgementsAll=questionDAO.junzhongJudgement();
 				}
 				else if(content.equals("5")){
 					//军事高技术
-					judgements=questionDAO.jishuJudgement();
+					judgementsAll=questionDAO.jishuJudgement();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("6")){
 					//军事理论
-					judgements=questionDAO.lilunJudgement();
+					judgementsAll=questionDAO.lilunJudgement();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("7")){
 					//作战
-					judgements=questionDAO.zuozhanJudgement();
+					judgementsAll=questionDAO.zuozhanJudgement();
 				}
-				else if(content.equals("1")){
+				else if(content.equals("8")){
 					//训练
-					judgements=questionDAO.xunlianJudgement();
+					judgementsAll=questionDAO.xunlianJudgement();
 				}
 				else{
 //					judgements = questionDAO.single();
@@ -289,10 +281,13 @@ public class TestServlet implements Servlet{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			List<Judgement> judgements=new ArrayList<Judgement>();
+			for(int i=0;i<Integer.valueOf(num);i++){
+				judgements.add(judgementsAll.get(i));
+			}
 			((HttpServletRequest)request).getSession().setAttribute("judgements", judgements);
 			((HttpServletRequest)request).getSession().setAttribute("content", content);
 			((HttpServletRequest)request).getSession().setAttribute("type", type);
-			List<Judgement> q = (List<Judgement>)((HttpServletRequest)request).getSession().getAttribute("judgements");
 			PrintWriter out = response.getWriter();
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
@@ -301,25 +296,16 @@ public class TestServlet implements Servlet{
 			out.println("	<body>");
 			out.println("	<h1 align='center'>欢迎进入考试系统！</h1>");
 			out.println("<form action=\"score.action\" method=\"post\">");
-			out.println("	<ol id='question'>");
-			int flag = Integer.valueOf(num);
-			int order=1;
-			JSONObject json=new JSONObject();
-			List<Map>  list=new ArrayList<Map>();
+			out.println("	<ol id='judgement'>");
 			for(Judgement judgement : judgements){
 				out.println("<li>");
 				out.println(judgement.getQuestion() + "<br/>");
-				out.println("<input type='radio' name='"+judgement.getQid()+"'value='1'>对<br/>");
-				out.println("<input type='radio' name='"+judgement.getQid()+"'value='0'>错<br/>");
+				out.println("<input type='radio' name='"+judgement.getQid()+"' value='1'>对<br/>");
+				out.println("<input type='radio' name='"+judgement.getQid()+"' value='0'>错<br/>");
 				out.println("</li>");
-				order++;
-				flag--;
-				if(flag == 0 ){
-					break;
-				}
 			}
 			out.println("	</ol>");
-			out.println("	<a href=\"/testweb/score.action\"><input type=\"submit\" value=提交></a>");
+			out.println("<input type=\"submit\" value='提交'>");
 			out.println("</form>");
 			out.println("	</body>");
 			out.println("</html>");

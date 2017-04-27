@@ -58,13 +58,13 @@ public class LoginServlet implements Servlet {
 			((HttpServletRequest)request).getSession().setAttribute("user", user);
 			if("1".equals(user.getUlevel())){
 //				request.getRequestDispatcher("/WEB-INF/view/setting.jsp").forward(request,response);
-				out.println("<div align=\"center\">欢迎 " + user.getUname() + ", 登录成功！<a href=\"/user/list.action\">点击进入管理员页面</a></div>");
+				out.println("<div align=\"center\">欢迎 " + user.getUname() + ", 登录成功！<a href=\"user/list.action\">点击进入管理员页面</a></div>");
 			}else{
 				request.getRequestDispatcher("/WEB-INF/view/settings.jsp").forward(request,response);
 //				out.println("<div align=\"center\">欢迎 " + user.getUname() + ", 登录成功！<a href=\"/test.action\">点击开始考试</a></div>");
 			}
 		}else{
-			out.println("<div align=\"center\">登录失败，请重新登录<a href=\"/login.html\">登录</a></div>");
+			out.println("<div align=\"center\">登录失败，请重新登录<a href=\"login.html\">登录</a></div>");
 		}         
 		out.println("	</body>");
 		out.println("</html>");

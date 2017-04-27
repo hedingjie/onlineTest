@@ -64,43 +64,40 @@ public class ScoreServlet implements Servlet{
 			out.println("	<head>");
 			out.println("	</head>");
 			out.println("	<body>");
+			out.println("	<h1>错误题目</h1>");
 			for(Question question : questions){
 				System.out.println((i++)+"."+request.getParameter(Integer.toString(question.getQid())));
 				if(question.getAnswer().equals(request.getParameter(Integer.toString(question.getQid())))){
 					score++;
 				}else{
-					if(request.getParameter(Integer.toString(question.getQid()))!=null){
-						//单选题和多选题
-						out.println("<li>");
-						out.println(question.getQuestion() + "<br/>");
-						out.println( question.getCheck()[0] + "<br/>");
-						out.println( question.getCheck()[1] + "<br/>");
-						out.println( question.getCheck()[2] + "<br/>");
-						if(!question.getCheck()[3].equals("")){
-							out.println( question.getCheck()[3] + "<br/>");
-						}
-						if(!question.getCheck()[4].equals("")){
-							out.println( question.getCheck()[4] + "<br/>");
-						}
-						if(!question.getCheck()[5].equals("")){
-							out.println( question.getCheck()[5] + "<br/>");
-						}
-						out.print("您的答案："+request.getParameter(Integer.toString(question.getQid()))+"<br/>");
-						out.print("正确答案："+question.getAnswer()+"<br/>");
-						out.println("</li>");
+					//单选题和多选题
+					out.println("<li>");
+					out.println(question.getQuestion() + "<br/>");
+					out.println( question.getCheck()[0] + "<br/>");
+					out.println( question.getCheck()[1] + "<br/>");
+					out.println( question.getCheck()[2] + "<br/>");
+					if(!question.getCheck()[3].equals("")){
+						out.println( question.getCheck()[3] + "<br/>");
 					}
-					else {
-						//错误
+					if(!question.getCheck()[4].equals("")){
+						out.println( question.getCheck()[4] + "<br/>");
 					}
+					if(!question.getCheck()[5].equals("")){
+						out.println( question.getCheck()[5] + "<br/>");
+					}
+					out.print("您的答案："+request.getParameter(Integer.toString(question.getQid()))+"<br/>");
+					out.print("正确答案：<font color='red'>"+question.getAnswer()+"</font><br/>");
+					out.println("</li>");
 				}
 			}
-			out.println("	<h1 align='center'>您的得分为：" + score + "</h1>");
+			out.println("	<h1 align='center'>总分为："+questions.size()+"分，您的得分为：<font color='red'>" + score + "</h1>");
 			out.println("	</body>");
 			out.println("</html>");
 			out.flush();
 			out.close();
 		}
 		else if(type.equals("2")){
+			//判断题
 			List<Judgement> judgements = (List<Judgement>)((HttpServletRequest)request).getSession().getAttribute("judgements");
 			PrintWriter out = response.getWriter();
 			out.println("<!DOCTYPE html>");
@@ -108,25 +105,29 @@ public class ScoreServlet implements Servlet{
 			out.println("	<head>");
 			out.println("	</head>");
 			out.println("	<body>");
+			out.println("	<h1>错误题目</h1>");
 			for(Judgement judgement : judgements){
 				System.out.println((i++)+"."+request.getParameter(Integer.toString(judgement.getQid())));
 				if(judgement.getAnswer().equals(request.getParameter(Integer.toString(judgement.getQid())))){
 					score++;
-				}else{
-					if(request.getParameter(Integer.toString(judgement.getQid()))!=null){
-						//单选题和多选题
-						out.println("<li>");
-						out.println(judgement.getQuestion() + "<br/>");
-						out.print("您的答案："+(request.getParameter(Integer.toString(judgement.getQid())).equals("1")?"对":"错")+"<br/>");
-						out.print("正确答案："+(judgement.getAnswer().equals("1")?"对":"错")+"<br/>");
-						out.println("</li>");
-					}
-					else {
-						//错误
-					}
+				}else if(request.getParameter(Integer.toString(judgement.getQid()))!=null){
+					//判断题
+					out.println("<li>");
+					out.println(judgement.getQuestion() + "<br/>");
+					out.print("您的答案："+(request.getParameter(Integer.toString(judgement.getQid())).equals("1")?"对":"错")+"<br/>");
+					out.print("正确答案：<font color='red'>"+(judgement.getAnswer().equals("1")?"对":"错")+"</font><br/>");
+					out.println("</li>");
+				}
+				else{
+					//判断题
+					out.println("<li>");
+					out.println(judgement.getQuestion() + "<br/>");
+					out.print("您的答案：null<br/>");
+					out.print("正确答案：<font color='red'>"+(judgement.getAnswer().equals("1")?"对":"错")+"</font><br/>");
+					out.println("</li>");
 				}
 			}
-			out.println("	<h1 align='center'>您的得分为：" + score + "</h1>");
+			out.println("	<h1 align='center'>总分为："+judgements.size()+"分，您的得分为：<font color='red'>" + score + "</font></h1>");
 			out.println("	</body>");
 			out.println("</html>");
 			out.flush();

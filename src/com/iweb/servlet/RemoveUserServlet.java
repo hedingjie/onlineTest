@@ -51,7 +51,7 @@ public class RemoveUserServlet implements Servlet {
 				request.setAttribute("msg", "删除失败！");
 			}
 			((HttpServletRequest)request).getSession().setAttribute("msg", "恭喜删除成功");
-			request.getRequestDispatcher("list.action").forward(request, response);
+			request.getRequestDispatcher("online/list.action").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

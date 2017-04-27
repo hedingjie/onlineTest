@@ -12,7 +12,7 @@
 </head>
 <body>
 <form action="test.action" method="get">
-    <table align="center">
+    <table align="center" border="1">
         <tr>
             <td>考试题型：</td>
             <td>
@@ -44,8 +44,9 @@
             <td><input type="text" name="num" value="10"/></td>
         </tr>
         <tr>
-            <td><input type="submit" value="开始考试"></td>
-            <td></td>
+            <td colspan="2" align="center">
+                <input type="submit" value="开始考试">
+            </td>
         </tr>
     </table>
 </form>

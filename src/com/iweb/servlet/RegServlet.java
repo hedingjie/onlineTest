@@ -58,9 +58,9 @@ public class RegServlet implements Servlet {
 		out.println("	</head>");
 		out.println("	<body>");
 		if(userDAO.add(user)){
-			out.println("	恭喜，注册成功！<a href=\"/login.html\">进入登录页面</a>");
+			out.println("	恭喜，注册成功！<a href=\"/online/login.html\">进入登录页面</a>");
 		}else{
-			out.println("	抱歉，注册失败！<a href=\"/reg.html\">回到首页</a>");
+			out.println("	抱歉，注册失败！<a href=\"/online/reg.html\">回到首页</a>");
 		}
 		out.println("	</body>");
 		out.println("</html>");

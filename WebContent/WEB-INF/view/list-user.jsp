@@ -52,7 +52,7 @@
 			<td>${user.uname}</td>
 			<td>
 				<c:if test="${user.id != sessionScope.user.id and '1'==sessionScope.user.ulevel}">
-				<a href="/onlinetest/user/remove.action?id=${user.id}">删除</a>
+				<a href="/online/user/remove.action?id=${user.id}">删除</a>
 				</c:if>
 			</td>
 		</tr>
